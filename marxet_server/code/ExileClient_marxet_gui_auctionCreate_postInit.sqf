@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_display","_texts","_title"];
+ 
+private["_display", "_texts", "_title"];
 disableSerialization;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
 _texts = [

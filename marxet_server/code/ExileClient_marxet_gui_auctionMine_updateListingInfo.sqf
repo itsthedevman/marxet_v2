@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_listbox","_index","_display","_entry","_timeLeft","_classname","_picture","_title","_createdOnTitle"];
+ 
+private["_listbox", "_index", "_display", "_entry", "_timeLeft", "_classname", "_picture", "_title", "_createdOnTitle"];
 disableSerialization;
 _listbox = _this select 0;
 _index = _this select 1;
@@ -21,7 +22,7 @@ _title ctrlSetStructuredText parseText format["<t align='center' color='#3FD4FC'
 (_display displayCtrl 22505) ctrlSetStructuredText parseText format["<t align='center'>%1<img image='\exile_assets\texture\ui\poptab_inline_ca.paa' size='1' shadow='true' /></t>", (_entry select 4) select 1];
 _createdOnTitle ctrlSetStructuredText parseText format ["<t align='center' size='0.8'>Created: %1</t>", (_entry select 2) call ExileClient_marxet_util_time_pretty];
 (_display displayCtrl 22510) ctrlSetStructuredText parseText format[
-	"<t>Removal Fee: <t color='#C72651'>%1</t><img image='\exile_assets\texture\ui\poptab_inline_ca.paa' size='1' shadow='true' /></t>",
+	"<t>Removal Fee: <t color='#C72651'>%1</t><img image='\exile_assets\texture\ui\poptab_inline_ca.paa' size='1' shadow='true' /></t>", 
 	floor((getNumber(missionConfigFile >> "CfgExileArsenal" >> _classname >> "price")) * (getNumber(missionConfigFile >> "CfgMarXet" >> "Settings" >> "removalFeeFactor"))) max 1
 ];
 MarXetEntryEndTime = (_entry select 4) select 0;

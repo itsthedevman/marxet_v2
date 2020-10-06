@@ -3,12 +3,13 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_control","_display","_panelTitle"];
+ 
+private["_control", "_display", "_panelTitle"];
 disableSerialization;
 _control = _this select 0;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
 _panelTitle = _display displayCtrl 22002;
-if !(MarXetUpdateThread isEqualTo -1) then
+if !(MarXetUpdateThread isEqualTo -1) then 
 {
 	[MarXetUpdateThread] call ExileClient_system_thread_removeTask;
 	MarXetUpdateThread = -1;
@@ -25,7 +26,7 @@ forEach [
 	22032
 ];
 ctrlSetFocus _control;
-switch (_control) do
+switch (_control) do 
 {
 	case (_display displayCtrl 22011):
 	{
@@ -44,7 +45,7 @@ switch (_control) do
 		call ExileClient_marxet_gui_tradeCreate_postInit;
 	};
 	case (_display displayCtrl 22013):
-	{
+	{	
 		MarXetCurrentPanel = 22029;
 		_panelTitle ctrlSetText "TRADE: VIEW MY REQUESTS";
 		call ExileClient_marxet_gui_tradeMine_preInit;

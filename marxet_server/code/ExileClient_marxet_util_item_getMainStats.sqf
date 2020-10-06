@@ -3,31 +3,32 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_itemClassName","_bidPrice","_bidCount","_itemType","_stats","_armor","_mass","_containerClass","_capacity","_ammoClassName","_damage","_aoeRadius","_maxControlRange","_triggerRadius","_maxRange","_explosionTime","_typicalSpeed","_tracersEvery","_attributeName","_attributeId","_effectValue","_effectDuration","_effectSign","_effectUnit","_modes","_highestRange","_lowestDispersion","_lowestReloadTime","_roundsPerMinute"];
+ 
+private["_itemClassName", "_bidPrice", "_bidCount", "_itemType", "_stats", "_armor", "_mass", "_containerClass", "_capacity", "_ammoClassName", "_damage", "_aoeRadius", "_maxControlRange", "_triggerRadius", "_maxRange", "_explosionTime", "_typicalSpeed", "_tracersEvery", "_attributeName", "_attributeId", "_effectValue", "_effectDuration", "_effectSign", "_effectUnit", "_modes", "_highestRange", "_lowestDispersion", "_lowestReloadTime", "_roundsPerMinute"];
 _itemClassName = _this select 0;
 _bidPrice = param [1, nil];
-_bidCount = param [2, nil];
+_bidCount = param [2, nil]; 
 _itemType = [_itemClassName] call BIS_fnc_itemType;
-_stats = [];
+_stats = []; 
 switch (_itemType select 0) do
 {
-	case "Equipment":
+	case "Equipment": 
 	{
 		switch (_itemType select 1) do
 		{
-			case "Headgear":
-			{
+			case "Headgear": 
+			{	
 				_armor = _itemClassName call ExileClient_util_item_getArmor;
 				_mass = getNumber(configFile >> "CfgWeapons" >> _itemClassName >> "ItemInfo" >> "mass");
 				_stats pushBack
 				[
-					"ARMOR",
+					"ARMOR", 
 					format["<t size='1' font='puristaMedium' align='right'>%1</t>", _armor],
 					linearConversion [0, 12, _armor, 0, 1, true]
 				];
 				_stats pushBack
 				[
-					"MASS",
+					"MASS", 
 					format["<t size='1' font='puristaMedium' align='right'>%1</t>", _mass],
 					linearConversion [0, 60, _mass, 0, 1, true]
 				];
@@ -40,19 +41,19 @@ switch (_itemType select 0) do
 				_mass = getNumber(configFile >> "CfgWeapons" >> _itemClassName >> "ItemInfo" >> "mass");
 				_stats pushBack
 				[
-					"ARMOR",
+					"ARMOR", 
 					format["<t size='1' font='puristaMedium' align='right'>%1</t>", _armor],
 					linearConversion [0, 204, _armor, 0, 1, true]
 				];
 				_stats pushBack
 				[
-					"CAPACITY",
+					"CAPACITY", 
 					format["<t size='1' font='puristaMedium' align='right'>%1</t>", _capacity],
 					linearConversion [0, 160, _capacity, 0, 1, true]
 				];
 				_stats pushBack
 				[
-					"MASS",
+					"MASS", 
 					format["<t size='1' font='puristaMedium' align='right'>%1</t>", _mass],
 					linearConversion [0, 120, _mass, 0, 1, true]
 				];
@@ -63,13 +64,13 @@ switch (_itemType select 0) do
 				_mass = getNumber(configFile >> "CfgVehicles" >> _itemClassName >> "mass");
 				_stats pushBack
 				[
-					"CAPACITY",
+					"CAPACITY", 
 					format["<t size='1' font='puristaMedium' align='right'>%1</t>", _capacity],
 					linearConversion [0, 320, _capacity, 0, 1, true]
 				];
 				_stats pushBack
 				[
-					"MASS",
+					"MASS", 
 					format["<t size='1' font='puristaMedium' align='right'>%1</t>", _mass],
 					linearConversion [0, 380, _mass, 0, 1, true]
 				];
@@ -81,20 +82,20 @@ switch (_itemType select 0) do
 				_mass = getNumber(configFile >> "CfgWeapons" >> _itemClassName >> "ItemInfo" >> "mass");
 				_stats pushBack
 				[
-					"CAPACITY",
+					"CAPACITY", 
 					format["<t size='1' font='puristaMedium' align='right'>%1</t>", _capacity],
 					linearConversion [0, 500, _capacity, 0, 1, true]
 				];
 				_stats pushBack
 				[
-					"MASS",
+					"MASS", 
 					format["<t size='1' font='puristaMedium' align='right'>%1</t>", _mass],
 					linearConversion [0, 100, _mass, 0, 1, true]
 				];
 			};
 		};
 	};
-	case "Mine":
+	case "Mine": 
 	{
 		_mass = getNumber(configFile >> "CfgMagazines" >> _itemClassName >> "mass");
 		_ammoClassName = getText(configFile >> "CfgMagazines" >> _itemClassName >> "ammo");
@@ -104,7 +105,7 @@ switch (_itemType select 0) do
 		_triggerRadius = getNumber(configFile >> "CfgAmmo" >> _ammoClassName >> "mineBoundingDist");
 		_stats pushBack
 		[
-			"CONTROL RANGE",
+			"CONTROL RANGE", 
 			format["<t size='1' font='puristaMedium' align='right'>%1m</t>", _maxControlRange],
 			linearConversion [0, 1000, _maxControlRange, 0, 1, true]
 		];
@@ -112,33 +113,33 @@ switch (_itemType select 0) do
 		{
 			_stats pushBack
 			[
-				"TRIGGER RADIUS",
+				"TRIGGER RADIUS", 
 				format["<t size='1' font='puristaMedium' align='right'>%1m</t>", _triggerRadius],
 				linearConversion [0, 5, _triggerRadius, 0, 1, true]
 			];
 		};
 		_stats pushBack
 		[
-			"AOE",
+			"AOE", 
 			format["<t size='1' font='puristaMedium' align='right'>%1m</t>", _aoeRadius],
 			linearConversion [0, 50, _aoeRadius, 0, 1, true]
 		];
 		_stats pushBack
 		[
-			"DAMAGE",
+			"DAMAGE", 
 			format["<t size='1' font='puristaMedium' align='right'>%1 HP</t>", _damage],
 			linearConversion [0, 10000, _damage, 0, 1, true]
 		];
 		_stats pushBack
 		[
-			"MASS",
+			"MASS", 
 			format["<t size='1' font='puristaMedium' align='right'>%1</t>", _mass],
 			linearConversion [0, 1200, _mass, 0, 1, true]
 		];
 	};
 	case "Item":
 	{
-		switch (_itemType select 1) do
+		switch (_itemType select 1) do 
 		{
 			case "AccessorySights":
 			{
@@ -149,27 +150,27 @@ switch (_itemType select 0) do
 				forEach ("true" configClasses (configFile >> "CfgWeapons" >> _itemClassName >> "ItemInfo" >> "OpticsModes"));
 				_stats pushBack
 				[
-					"ZOOM",
+					"ZOOM", 
 					format["<t size='1' font='puristaMedium' align='right'>%1m</t>", _maxRange],
 					linearConversion [0, 2500, _maxRange, 0, 1, true]
-				];
+				];				
 			};
 		};
 		_mass = getNumber(configFile >> "CfgWeapons" >> _itemClassName >> "ItemInfo" >> "mass");
 		_stats pushBack
 		[
-			"MASS",
+			"MASS", 
 			format["<t size='1' font='puristaMedium' align='right'>%1</t>", _mass],
 			linearConversion [0, 1200, _mass, 0, 1, true]
 		];
 	};
 	case "Magazine":
 	{
-		switch (_itemType select 1) do
+		switch (_itemType select 1) do 
 		{
 			case "Grenade":
 			{
-				if !(_itemClassName isEqualTo "Exile_Item_ZipTie") then
+				if !(_itemClassName isEqualTo "Exile_Item_ZipTie") then 
 				{
 					_ammoClassName = getText(configFile >> "CfgMagazines" >> _itemClassName >> "ammo");
 					_explosionTime = getNumber(configFile >> "CfgAmmo" >> _ammoClassName >> "explosionTime");
@@ -177,13 +178,13 @@ switch (_itemType select 0) do
 					_aoeRadius = getNumber(configFile >> "CfgAmmo" >> _ammoClassName >> "indirectHitRange");
 					_stats pushBack
 					[
-						"DAMAGE",
+						"DAMAGE", 
 						format["<t size='1' font='puristaMedium' align='right'>%1 HP</t>", _damage],
 						linearConversion [0, 10000, _damage, 0, 1, true]
 					];
 					_stats pushBack
 					[
-						"AOE",
+						"AOE", 
 						format["<t size='1' font='puristaMedium' align='right'>%1m</t>", _aoeRadius],
 						linearConversion [0, 50, _aoeRadius, 0, 1, true]
 					];
@@ -191,7 +192,7 @@ switch (_itemType select 0) do
 					{
 						_stats pushBack
 						[
-							"COUNTDOWN",
+							"COUNTDOWN", 
 							format["<t size='1' font='puristaMedium' align='right'>%1s</t>", _explosionTime],
 							linearConversion [0, 60, _explosionTime, 0, 1, true]
 						];
@@ -212,21 +213,21 @@ switch (_itemType select 0) do
 				_tracersEvery = getNumber(configFile >> "CfgMagazines" >> _itemClassName >> "tracersEvery");
 				_stats pushBack
 				[
-					"DAMAGE",
+					"DAMAGE", 
 					format["<t size='1' font='puristaMedium' align='right'>%1 HP</t>", _damage],
 					linearConversion [0, 550, _damage, 0, 1, true]
 				];
 				_stats pushBack
 				[
-					"SPEED",
+					"SPEED", 
 					format["<t size='1' font='puristaMedium' align='right'>%1m/s</t>", _typicalSpeed],
 					linearConversion [0, 6000, _typicalSpeed, 0, 1, true]
 				];
-				if (_tracersEvery > 0) then
+				if (_tracersEvery > 0) then 
 				{
 					_stats pushBack
 					[
-						"TRACERS",
+						"TRACERS", 
 						format["<t size='1' font='puristaMedium' align='right'>1:%1</t>", _tracersEvery],
 						linearConversion [0, _tracersEvery, 1, 0, 1, true]
 					];
@@ -262,7 +263,7 @@ switch (_itemType select 0) do
 								linearConversion [0, 100, _effectValue, 0, 1, true]
 							];
 						}
-						else
+						else 
 						{
 							_stats pushBack
 							[
@@ -279,7 +280,7 @@ switch (_itemType select 0) do
 		_mass = getNumber(configFile >> "CfgMagazines" >> _itemClassName >> "mass");
 		_stats pushBack
 		[
-			"MASS",
+			"MASS", 
 			format["<t size='1' font='puristaMedium' align='right'>%1</t>", _mass],
 			linearConversion [0, 1200, _mass, 0, 1, true]
 		];
@@ -313,19 +314,19 @@ switch (_itemType select 0) do
 					_roundsPerMinute = ceil(60 / _lowestReloadTime);
 					_stats pushBack
 					[
-						"RANGE",
+						"RANGE", 
 						format["<t size='1' font='puristaMedium' align='right'>%1m</t>", _highestRange],
 						linearConversion [0, 2200, _highestRange, 0, 1, true]
 					];
 					_stats pushBack
 					[
-						"ACCURACY",
+						"ACCURACY", 
 						"",
-						linearConversion [0.00035, 0.00493, _lowestDispersion, 1, 0, true]
+						linearConversion [0.00035, 0.00493, _lowestDispersion, 1, 0, true] 
 					];
 					_stats pushBack
 					[
-						"FIRE RATE",
+						"FIRE RATE", 
 						format["<t size='1' font='puristaMedium' align='right'>%1rpm</t>", _roundsPerMinute],
 						linearConversion [0, 4000, _roundsPerMinute, 0, 1, true]
 					];
@@ -335,26 +336,26 @@ switch (_itemType select 0) do
 		_mass = getNumber(configFile >> "CfgWeapons" >> _itemClassName >> "WeaponSlotsInfo" >> "mass");
 		_stats pushBack
 		[
-			"MASS",
+			"MASS", 
 			format["<t size='1' font='puristaMedium' align='right'>%1</t>", _mass],
 			linearConversion [0, 1200, _mass, 0, 1, true]
 		];
 	};
 };
-if !(isNil "_bidPrice") then
+if !(isNil "_bidPrice") then 
 {
 	_stats pushBack
 	[
-		"BID PRICE",
+		"BID PRICE", 
 		format["<t size='1' font='puristaMedium' align='right'>%1<img image='\exile_assets\texture\ui\poptab_inline_ca.paa' size='1' shadow='true' /></t>", _bidPrice],
 		0
 	];
 };
-if !(isNil "_bidCount") then
+if !(isNil "_bidCount") then 
 {
 	_stats pushBack
 	[
-		"BID COUNT",
+		"BID COUNT", 
 		format["<t size='1' font='puristaMedium' align='right'>%1</t>", _bidCount],
 		0
 	];

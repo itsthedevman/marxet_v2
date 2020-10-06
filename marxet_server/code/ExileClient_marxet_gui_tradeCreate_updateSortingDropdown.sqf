@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_display","_dropdown","_index","_config"];
+ 
+private["_display", "_dropdown", "_index", "_config"];
 disableSerialization;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
 _dropdown = _display displayCtrl 22151;

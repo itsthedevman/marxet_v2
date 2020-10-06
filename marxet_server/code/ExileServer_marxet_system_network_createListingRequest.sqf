@@ -3,37 +3,42 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_sessionID","_package","_listingClassname","_listingInfo","_startingAmount","_auctionLength","_containerType","_containerNetID","_playerObject","_id","_itemProperties","_removed","_respect","_vehicle","_endTime","_dbPackage","_traderLog"];
+ 
+private["_sessionID", "_package", "_listingClassname", "_listingInfo", "_startingAmount", "_auctionLength", "_containerType", "_containerNetID", "_playerObject", "_id", "_itemProperties", "_removed", "_respect", "_vehicle", "_endTime", "_dbPackage", "_traderLog"];
 _sessionID = _this select 0;
 _package = _this select 1;
 _listingClassname = (_package select 0) select 0;
 _listingInfo = (_package select 0) select 1;
-_startingAmount = _package select 1;
+_startingAmount = parseNumber(_package select 1);
 _auctionLength = _package select 2;
 _containerType = _package select 3;
 _containerNetID = _package select 4;
-try
+try 
 {
 	_playerObject = _sessionID call ExileServer_system_session_getPlayerObject;
-	if (isNull _playerObject) then
+	if (isNull _playerObject) then 
 	{
 		throw "Player is Null";
 	};
-	if (_playerObject getVariable ["ExileMutex", false]) then
+	if (_playerObject getVariable ["ExileMutex", false]) then 
 	{
 		throw "Player is Mutex";
 	};
 	_playerObject setVariable ["ExileMutex", true];
 	_id = [] call ExileServer_marxet_system_request_generateID;
-	if (_id isEqualTo "") then
+	if (_id isEqualTo "") then 
 	{
 		throw "Failed to generate ID";
 	};
+	if (_startingAmount < 1) then 
+	{
+		throw "Starting price must be greater than or equal to 1";
+	};
 	_itemProperties = [];
 	_removed = false;
-	switch (_listingClassname) do
+	switch (_listingClassname) do 
 	{
-		case "ExileScore":
+		case "ExileScore": 
 		{
 			_respect = _playerObject getVariable ["ExileScore", 0];
 			_respect = _respect - parseNumber(_listingInfo);
@@ -43,7 +48,7 @@ try
 			[_sessionID, "updateRespect", [_respect]] call ExileServer_system_network_send_to;
 			_removed = true;
 		};
-		default
+		default 
 		{
 			switch (_containerType) do
 			{
@@ -66,25 +71,25 @@ try
 				case 5:
 				{
 					_vehicle = objectFromNetId _containerNetID;
-					_removed = [_vehicle, _listingClassname] call ExileClient_util_containerCargo_add;
+					_removed = [_vehicle, _listingClassname] call ExileClient_util_containerCargo_remove;
 				};
 			};
 		};
 	};
-	if !(_removed) then
+	if !(_removed) then 
 	{
 		throw "Failed to remove trade item/money/respect";
 	};
 	_endTime = parseSimpleArray ("extDB3" callExtension format[
-		"9:DATEADD:%1:[%2,%3,%4,0]",
-		"marxetCurrentDate" call ExileServer_system_database_query_selectSingleField,
-		_auctionLength select 0,
-		_auctionLength select 1,
+		"9:DATEADD:%1:[%2,%3,%4,0]", 
+		"marxetCurrentDate" call ExileServer_system_database_query_selectSingleField, 
+		_auctionLength select 0, 
+		_auctionLength select 1, 
 		_auctionLength select 2
 	]) select 1;
-	MarXetAuction setVariable
+	MarXetAuction setVariable 
 	[
-		_id,
+		_id, 
 		[
 			false,
 			[
@@ -102,12 +107,12 @@ try
 				0,
 				""
 			]
-		],
+		], 
 		true
 	];
-	_dbPackage =
+	_dbPackage = 
 	[
-		"marxetCreateListing",
+		"marxetCreateListing", 
 		[
 			_id,
 			getPlayerUID(_playerObject),
@@ -117,7 +122,7 @@ try
 			_startingAmount,
 			_endTime
 		]
-	]
+	] 
 	call ExileServer_util_extDB2_createMessage;
 	_dbPackage call ExileServer_system_database_query_insertSingle;
 	[_sessionID, "createListingResponse", [true, _listingClassname]] call ExileServer_system_network_send_to;
@@ -126,8 +131,8 @@ try
 	if (getNumber(missionConfigFile >> "CfgMarXet" >> "Settings" >> "Logging" >> "logToFile") isEqualTo 1) then
 	{
 		_traderLog = format [
-			"PLAYER %1 (%2) CREATED A LISTING. ID: %3. LISTING ITEM: %4. STARTING PRICE %5. ENDING DATE: %6",
-			_playerObject,
+			"PLAYER %1 (%2) CREATED A LISTING. ID: %3. LISTING ITEM: %4. STARTING PRICE %5. ENDING DATE: %6", 
+			_playerObject, 
 			getPlayerUID(_playerObject),
 			_id,
 			_startingAmount,
@@ -138,8 +143,8 @@ try
 	if (getNumber(missionConfigFile >> "CfgMarXet" >> "Settings" >> "Logging" >> "logToDiscord") isEqualTo 1) then
 	{
 		[
-			"success",
-			"embed",
+			"success", 
+			"embed", 
 			[
 				"Listing Created",
 				"",
@@ -154,12 +159,24 @@ try
 		]
 		call ESM_fnc_logToDiscord;
 	};
+	if (isClass(configFile >> "CfgPatches" >> "exile_server_xm8")) then 
+	{
+		[
+			getPlayerUID(_playerObject),
+			"Listing Created",
+			format[
+				"Awesome!\nYour listing of **%1** has been created\nWe will send you another notification when the listing closes\nThank you for using **MarXet**, Exile's leading Player Marketplace and Auction House",
+				getText(configFile >> (_listingClassname call ExileClient_util_gear_getConfigNameByClassName) >> _listingClassname >> "displayName")
+			]
+		] 
+		call ExileServer_system_xm8_sendCustom;
+	};
 }
-catch
+catch 
 {
 	[_sessionID, "createListingResponse", [false, _exception]] call ExileServer_system_network_send_to;
 };
-if (!isNil "_playerObject") then
+if (!isNil "_playerObject") then 
 {
 	_playerObject setVariable ["ExileMutex", false];
 };

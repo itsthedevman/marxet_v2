@@ -3,23 +3,24 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_output","_classname","_quantity","_displayName","_configName"];
+ 
+private["_output", "_classname", "_quantity", "_displayName", "_configName"];
 _output = "";
 {
 	_classname = _x select 0;
 	_quantity = _x select 1;
 	_displayName = "";
-	switch (_classname) do
+	switch (_classname) do 
 	{
-		case "ExileMoney":
+		case "ExileMoney": 
 		{
 			_displayName = "Poptabs";
 		};
-		case "ExileScore":
+		case "ExileScore": 
 		{
 			_displayName = "Respect";
 		};
-		default
+		default 
 		{
 			_configName = _classname call ExileClient_util_gear_getConfigNameByClassName;
 			_displayName = getText(configFile >> _configName >> _classname >> "displayName");

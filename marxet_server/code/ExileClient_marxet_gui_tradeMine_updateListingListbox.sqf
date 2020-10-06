@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_display","_listbox","_listings","_entry","_classname","_configName","_displayName","_picture","_quality","_qualityColor","_isVehicle","_index","_skinName","_health"];
+ 
+private["_display", "_listbox", "_listings", "_entry", "_classname", "_displayName", "_picture", "_configName", "_config", "_quality", "_qualityColor", "_isVehicle", "_index", "_skinName", "_health"];
 disableSerialization;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
 _listbox = _display displayCtrl 22201;
@@ -11,15 +12,34 @@ lbClear _listbox;
 _listings = [];
 {
 	_entry = MarXetTrading getVariable [_x, nil];
-	if !(isNil "_entry") then
+	if !(isNil "_entry") then 
 	{
 		_entry = +_entry;
-		if (((_entry select 1) select 0) isEqualTo (getPlayerUID player)) then
+		if (((_entry select 1) select 0) isEqualTo (getPlayerUID player)) then 
 		{
 			_classname = ((_entry select 3) select 0);
-			_configName = _classname call ExileClient_util_gear_getConfigNameByClassName;
-			_displayName = getText(configFile >> _configName >> _classname >> "displayName");
-			_picture = getText(configFile >> _configName >> _classname >> "picture");
+			_displayName = "";
+			_picture = "";
+			switch (_classname) do
+			{
+				case "ExileMoney":
+				{
+					_displayName = format["%1 Poptabs", (_entry select 3) select 1 select 0];
+					_picture = "\exile_assets\texture\ui\poptab_notification_ca.paa";
+				};
+				case "ExileScore": 
+				{
+					_displayName = format["%1 Respect", (_entry select 3) select 1 select 0];
+					_picture = "\exile_assets\texture\ui\fail_ca.paa";
+				};
+				default 
+				{
+					_configName = _classname call ExileClient_util_gear_getConfigNameByClassName;
+					_config = configFile >> _configName >> _classname;
+					_displayName = getText(_config >> "displayName");
+					_picture = getText(_config >> "picture");
+				};
+			};
 			(_entry select 3) pushBack _displayName;
 			(_entry select 3) pushBack _picture;
 			(_entry select 3) pushBack _x;
@@ -38,7 +58,7 @@ forEach (allVariables MarXetTrading);
 		case 3:		 { _qualityColor = [0, 0.78, 0.92, 1]; };
 		case 4:		 { _qualityColor = [0.62, 0.27, 0.58, 1]; };
 		case 5:		 { _qualityColor = [1, 0.7, 0.09, 1]; };
-		case 6:		 { _qualityColor = [0.93, 0, 0.48, 1]; };
+		case 6:		 { _qualityColor = [0.93, 0, 0.48, 1]; };						
 	};
 	_name = (_entry select 3) select 2;
 	_classname = (_entry select 3) select 0;
@@ -48,10 +68,10 @@ forEach (allVariables MarXetTrading);
 	_listbox lbSetData [_index, str(_entry)];
 	_listbox lbSetColor [_index, _qualityColor];
 	_listbox lbSetValue [_index, 0];
-	if (_isVehicle) then
+	if (_isVehicle) then 
 	{
 		_skinName = _classname call ExileClient_marxet_util_vehicle_getSkinName;
-		if !(_skinName isEqualTo "") then
+		if !(_skinName isEqualTo "") then 
 		{
 			_listbox lbSetText [_index, format["%1 (%2)", _name, _skinName]];
 		};

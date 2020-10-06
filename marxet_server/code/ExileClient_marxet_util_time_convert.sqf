@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_endYear","_endMonth","_endDay","_endHours","_endMinute","_endSeconds","_currentYear","_currentMonth","_currentDay","_currentHours","_currentMinute","_currentSeconds","_yearDiff","_monthDiff","_dayDiff","_hourDiff","_minuteDiff","_secondDiff","_minutes","_seconds"];
+ 
+private["_endYear", "_endMonth", "_endDay", "_endHours", "_endMinute", "_endSeconds", "_currentYear", "_currentMonth", "_currentDay", "_currentHours", "_currentMinute", "_currentSeconds", "_yearDiff", "_monthDiff", "_dayDiff", "_hourDiff", "_minuteDiff", "_secondDiff", "_minutes", "_seconds"];
 _this params ["_endYear","_endMonth","_endDay","_endHours","_endMinute","_endSeconds"];
 (call ExileServer_util_time_currentTime) params ["_currentYear","_currentMonth","_currentDay","_currentHours","_currentMinute","_currentSeconds"];
 _yearDiff = _endYear - _currentYear;

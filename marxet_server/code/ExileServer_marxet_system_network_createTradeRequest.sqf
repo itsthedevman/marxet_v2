@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_sessionID","_package","_tradeClassname","_tradeInfo","_requestedItems","_showName","_containerType","_containerNetID","_playerObject","_id","_itemProperties","_vehicleObject","_vehiclePosition","_items","_magazines","_weapons","_containers","_popTabs","_groundHolder","_popTabsObject","_removed","_money","_respect","_vehicle","_dbPackage","_traderLog"];
+ 
+private["_sessionID", "_package", "_tradeClassname", "_tradeInfo", "_requestedItems", "_showName", "_containerType", "_containerNetID", "_playerObject", "_id", "_itemProperties", "_vehicleObject", "_vehiclePosition", "_items", "_magazines", "_weapons", "_containers", "_popTabs", "_groundHolder", "_popTabsObject", "_removed", "_money", "_respect", "_vehicle", "_dbPackage", "_traderLog"];
 _sessionID = _this select 0;
 _package = _this select 1;
 _tradeClassname = (_package select 0) select 0;
@@ -12,28 +13,28 @@ _requestedItems = _package select 1;
 _showName = _package select 2;
 _containerType = _package select 3;
 _containerNetID = _package select 4;
-try
+try 
 {
 	_playerObject = _sessionID call ExileServer_system_session_getPlayerObject;
-	if (isNull _playerObject) then
+	if (isNull _playerObject) then 
 	{
 		throw "Player is Null";
 	};
-	if (_playerObject getVariable ["ExileMutex", false]) then
+	if (_playerObject getVariable ["ExileMutex", false]) then 
 	{
 		throw "Player is Mutex";
 	};
 	_playerObject setVariable ["ExileMutex", true];
 	_id = [] call ExileServer_marxet_system_request_generateID;
-	if (_id isEqualTo "") then
+	if (_id isEqualTo "") then 
 	{
 		throw "Failed to generate ID";
 	};
 	_itemProperties = [];
-	if (_tradeClassname isKindOf "AllVehicles") then
+	if (_tradeClassname isKindOf "AllVehicles") then 
 	{
 		_vehicleObject = objectFromNetId(_tradeInfo);
-		if (isNull(_vehicleObject) || !(alive _vehicleObject)) then
+		if (isNull(_vehicleObject) || !(alive _vehicleObject)) then 
 		{
 			throw "Vehicle is null or destroyed";
 		};
@@ -66,9 +67,9 @@ try
 	else
 	{
 		_removed = false;
-		switch (_tradeClassname) do
+		switch (_tradeClassname) do 
 		{
-			case "ExileMoney":
+			case "ExileMoney": 
 			{
 				_money = _playerObject getVariable ["ExileMoney", 0];
 				_money = _money - parseNumber(_tradeInfo);
@@ -77,7 +78,7 @@ try
 				format["setPlayerMoney:%1:%2", _money, _playerObject getVariable ["ExileDatabaseID", 0]] call ExileServer_system_database_query_fireAndForget;
 				_removed = true;
 			};
-			case "ExileScore":
+			case "ExileScore": 
 			{
 				_respect = _playerObject getVariable ["ExileScore", 0];
 				_respect = _respect - parseNumber(_tradeInfo);
@@ -87,7 +88,7 @@ try
 				[_sessionID, "updateRespect", [_respect]] call ExileServer_system_network_send_to;
 				_removed = true;
 			};
-			default
+			default 
 			{
 				switch (_containerType) do
 				{
@@ -110,19 +111,19 @@ try
 					case 5:
 					{
 						_vehicle = objectFromNetId _containerNetID;
-						_removed = [_vehicle, _tradeClassname] call ExileClient_util_containerCargo_add;
+						_removed = [_vehicle, _tradeClassname] call ExileClient_util_containerCargo_remove;
 					};
 				};
 			};
 		};
-		if !(_removed) then
+		if !(_removed) then 
 		{
 			throw "Failed to remove trade item/money/respect";
 		};
 	};
-	MarXetTrading setVariable
+	MarXetTrading setVariable 
 	[
-		_id,
+		_id, 
 		[
 			false,
 			[
@@ -136,12 +137,12 @@ try
 				_itemProperties
 			],
 			_requestedItems
-		],
+		], 
 		true
 	];
-	_dbPackage =
+	_dbPackage = 
 	[
-		"marxetCreateTrade",
+		"marxetCreateTrade", 
 		[
 			_id,
 			getPlayerUID(_playerObject),
@@ -150,7 +151,7 @@ try
 			_itemProperties,
 			_requestedItems
 		]
-	]
+	] 
 	call ExileServer_util_extDB2_createMessage;
 	_dbPackage call ExileServer_system_database_query_insertSingle;
 	[_sessionID, "createTradeResponse", [true, _tradeClassname]] call ExileServer_system_network_send_to;
@@ -159,8 +160,8 @@ try
 	if (getNumber(missionConfigFile >> "CfgMarXet" >> "Settings" >> "Logging" >> "logToFile") isEqualTo 1) then
 	{
 		_traderLog = format [
-			"PLAYER %1 (%2) CREATED A TRADE REQUEST. ID: %3. TRADE ITEM/VEHICLE: %4. REQUESTED ITEMS/VEHICLES: %5",
-			_playerObject,
+			"PLAYER %1 (%2) CREATED A TRADE REQUEST. ID: %3. TRADE ITEM/VEHICLE: %4. REQUESTED ITEMS/VEHICLES: %5", 
+			_playerObject, 
 			getPlayerUID(_playerObject),
 			_id,
 			_tradeClassname,
@@ -171,8 +172,8 @@ try
 	if (getNumber(missionConfigFile >> "CfgMarXet" >> "Settings" >> "Logging" >> "logToDiscord") isEqualTo 1) then
 	{
 		[
-			"success",
-			"embed",
+			"success", 
+			"embed", 
 			[
 				"Trade Created",
 				"",
@@ -186,12 +187,25 @@ try
 		]
 		call ESM_fnc_logToDiscord;
 	};
+	if (isClass(configFile >> "CfgPatches" >> "exile_server_xm8")) then 
+	{
+		[
+			getPlayerUID(_playerObject),
+			"Trade Created",
+			format[
+				"Understood!\nYour trade of **%1** has been created!\nThe following items/vehicles have been listed on MarXet:\n%2\nThank you for using **MarXet**, Exile's leading Player Marketplace and Auction House",
+				getText(configFile >> (_tradeClassname call ExileClient_util_gear_getConfigNameByClassName) >> _tradeClassname >> "displayName"),
+				_requestedItems call ExileClient_marxet_util_array_formatPretty
+			]
+		] 
+		call ExileServer_system_xm8_sendCustom;
+	};
 }
-catch
+catch 
 {
 	[_sessionID, "createTradeResponse", [false, _exception]] call ExileServer_system_network_send_to;
 };
-if (!isNil "_playerObject") then
+if (!isNil "_playerObject") then 
 {
 	_playerObject setVariable ["ExileMutex", false];
 };

@@ -3,6 +3,7 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
+ 
 if (serverTime < 4000 || time > 300) then
 {
 	MarXetTimeSynced = true;

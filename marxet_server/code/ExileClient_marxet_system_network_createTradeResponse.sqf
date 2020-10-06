@@ -3,22 +3,23 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_classname","_displayName","_configName","_message","_display"];
-if (_this select 0) then
+ 
+private["_classname", "_displayName", "_configName", "_message", "_display"];
+if (_this select 0) then 
 {
 	_classname = _this select 1;
 	_displayName = "";
-	switch (_classname) do
+	switch (_classname) do 
 	{
-		case "ExileMoney":
+		case "ExileMoney": 
 		{
 			_displayName = "Poptabs";
 		};
-		case "ExileScore":
+		case "ExileScore": 
 		{
 			_displayName = "Respect";
 		};
-		default
+		default 
 		{
 			_configName = _classname call ExileClient_util_gear_getConfigNameByClassName;
 			_displayName = getText(configFile >> _configName >> _classname >> "displayName");
@@ -36,7 +37,7 @@ else
 };
 ExileClientIsWaitingForServerTradeResponse = false;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
-if !(isNull _display) then
+if !(isNull _display) then 
 {
 	call ExileClient_marxet_gui_updatePlayerMoney;
 	call ExileClient_marxet_gui_updateInventoryDropdown;

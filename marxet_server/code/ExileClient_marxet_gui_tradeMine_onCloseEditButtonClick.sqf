@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_display","_button"];
+ 
+private["_display", "_button"];
 disableSerialization;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
 MarXetRequestedItems = [];

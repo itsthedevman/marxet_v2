@@ -3,9 +3,10 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_year","_month","_day","_hour","_min","_sec"];
+ 
+private["_year", "_month", "_day", "_hour", "_min", "_sec"];
 _this params ["_year", "_month", "_day", "_hour", "_min", "_sec"];
-switch (_month) do
+switch (_month) do 
 {
 	case 1: { _month = "Jan"; };
 	case 2: { _month = "Feb"; };

@@ -3,8 +3,9 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
+ 
 private["_display"];
-if (_this select 0) then
+if (_this select 0) then 
 {
 	["SuccessTitleOnly", ["Trade Updated"]] call ExileClient_gui_toaster_addTemplateToast;
 }
@@ -14,7 +15,7 @@ else
 };
 ExileClientIsWaitingForServerTradeResponse = false;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
-if !(isNull _display) then
+if !(isNull _display) then 
 {
 	call ExileClient_marxet_gui_tradeMine_onCloseEditButtonClick;
 	call ExileClient_marxet_gui_updatePlayerMoney;

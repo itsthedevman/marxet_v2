@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_display","_inventoryDropdown","_dropdownIndex","_tradeContainerType","_tradeVehicleObject","_items","_currentLoad","_maximumLoad","_inventoryListBox","_containerClass","_vehicles","_vehicleNetID","_vehicleObject","_inventoryLoadProgress","_inventoryLoadValue","_itemClassName","_itemInfo","_indexEntryIndex","_configName","_quality","_qualityColor"];
+ 
+private["_display", "_inventoryDropdown", "_dropdownIndex", "_tradeContainerType", "_tradeVehicleObject", "_items", "_currentLoad", "_maximumLoad", "_inventoryListBox", "_containerClass", "_vehicles", "_vehicleNetID", "_vehicleObject", "_inventoryLoadProgress", "_inventoryLoadValue", "_itemClassName", "_itemInfo", "_indexEntryIndex", "_configName", "_quality", "_qualityColor"];
 disableSerialization;
 _display = uiNameSpace getVariable ["RscMarXet", displayNull];
 _inventoryDropdown = _display displayCtrl 22019;
@@ -17,19 +18,19 @@ _inventoryListBox = _display displayCtrl 22020;
 lbClear _inventoryListBox;
 switch (_tradeContainerType) do
 {
-	case 1:
+	case 1: 
 	{
 		_currentLoad = (loadAbs player);
 		_maximumLoad = getNumber(configfile >> "CfgInventoryGlobalVariable" >> "maxSoldierLoad");
 		_items = [player, true] call ExileClient_util_playerEquipment_list;
-		if (player getVariable ["ExileMoney", 0] > 0) then
+		if (player getVariable ["ExileMoney", 0] > 0) then 
 		{
 			if (MarXetCurrentPanel isEqualTo 22028) then
 			{
 				_items = ["ExileMoney"] + _items;
 			};
 		};
-		if (ExileClientPlayerScore > 0) then
+		if (ExileClientPlayerScore > 0) then 
 		{
 			if (MarXetCurrentPanel in [22028, 22031]) then
 			{
@@ -44,7 +45,7 @@ switch (_tradeContainerType) do
 		_currentLoad = (loadUniform player) * _maximumLoad;
 		_items = (uniformContainer player) call ExileClient_util_containerCargo_list;
 	};
-	case 3:
+	case 3: 
 	{
 		_containerClass = getText(configFile >> "CfgWeapons" >> (vest player) >> "ItemInfo" >> "containerClass");
 		_maximumLoad = getNumber(configFile >> "CfgVehicles" >> _containerClass >> "maximumLoad");
@@ -57,19 +58,22 @@ switch (_tradeContainerType) do
 		_currentLoad = (loadBackpack player) * _maximumLoad;
 		_items = (backpackContainer player) call ExileClient_util_containerCargo_list;
 	};
-	default
+	default 
 	{
 		_items = [];
 		_vehicles = nearestObjects [player, ["LandVehicle", "Air", "Ship"], 80];
-		if (MarXetCurrentPanel in [22028]) then
+		if (getNumber(missionConfigFile >> "CfgMarXet" >> "Settings" >> "Vehicles" >> "allowVehiclesToBeListed") isEqualTo 1) then 
 		{
+			if ((MarXetCurrentPanel in [22028])) then 
 			{
-				if (local _x && {alive _x}) then
 				{
-					_items pushBack [typeOf _x, netID _x];
-				};
-			}
-			forEach _vehicles;
+					if (local _x && {alive _x}) then 
+					{
+						_items pushBack [typeOf _x, netID _x];
+					};
+				}
+				forEach _vehicles;
+			};
 			_maximumLoad = 0;
 			_currentLoad = 0;
 		}
@@ -83,7 +87,7 @@ switch (_tradeContainerType) do
 		};
 	};
 };
-if (MarXetCurrentPanel in [22028, 22031]) then
+if (MarXetCurrentPanel in [22028, 22031]) then 
 {
 	(_display displayCtrl 22021) ctrlShow false;
 	(_display displayCtrl 22022) ctrlShow false;
@@ -112,14 +116,14 @@ else
 {
 	_itemClassName = _x;
 	_itemInfo = "";
-	if (_x isEqualType []) then
+	if (_x isEqualType []) then 
 	{
 		_itemClassName = _x select 0;
 		_itemInfo = _x select 1;
 	};
-	switch (_itemClassName) do
+	switch (_itemClassName) do 
 	{
-		case "ExileMoney":
+		case "ExileMoney": 
 		{
 			_indexEntryIndex = _inventoryListBox lbAdd "Poptabs";
 			_inventoryListBox lbSetColor [_indexEntryIndex, [0.93, 0, 0.48, 1]];
@@ -127,7 +131,7 @@ else
 			_inventoryListBox lbSetValue [_indexEntryIndex, _tradeContainerType];
 			_inventoryListBox lbSetData [_indexEntryIndex, str([_itemClassName, "1"])];
 		};
-		case "ExileScore":
+		case "ExileScore": 
 		{
 			_indexEntryIndex = _inventoryListBox lbAdd "Respect";
 			_inventoryListBox lbSetColor [_indexEntryIndex, [0.93, 0, 0.48, 1]];
@@ -135,7 +139,7 @@ else
 			_inventoryListBox lbSetValue [_indexEntryIndex, _tradeContainerType];
 			_inventoryListBox lbSetData [_indexEntryIndex, str([_itemClassName, "1"])];
 		};
-		default
+		default 
 		{
 			_configName = _itemClassName call ExileClient_util_gear_getConfigNameByClassName;
 			_quality = getNumber(missionConfigFile >> "CfgExileArsenal" >> _itemClassName >> "quality");
@@ -146,7 +150,7 @@ else
 				case 3:		 { _qualityColor = [0, 0.78, 0.92, 1]; };
 				case 4:		 { _qualityColor = [0.62, 0.27, 0.58, 1]; };
 				case 5:		 { _qualityColor = [1, 0.7, 0.09, 1]; };
-				case 6:		 { _qualityColor = [0.93, 0, 0.48, 1]; };
+				case 6:		 { _qualityColor = [0.93, 0, 0.48, 1]; };						
 			};
 			_indexEntryIndex = _inventoryListBox lbAdd getText(configFile >> _configName >> _itemClassName >> "displayName");
 			_inventoryListBox lbSetColor [_indexEntryIndex, _qualityColor];

@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_listbox","_index","_display","_entry","_timeLeftCtrl","_playerPoptabs"];
+ 
+private["_listbox", "_index", "_display", "_entry", "_timeLeftCtrl", "_playerPoptabs"];
 disableSerialization;
 _listbox = _this select 0;
 _index = _this select 1;
@@ -15,7 +16,7 @@ MarXetCurrentSelectedID = (_entry select 3) select 4;
 MarXetEntryEndTime = (_entry select 4) select 0;
 _entry call ExileClient_marxet_gui_auctionView_updateItemStats;
 (_display displayCtrl 22335) ctrlSetText "";
-if (([] call ExileClient_marxet_util_time_sync) > 0) then
+if (([] call ExileClient_marxet_util_time_sync) > 0) then 
 {
 	(_display displayCtrl 22333) ctrlShow true;
 	_timeLeftCtrl = _display displayCtrl 22334;

@@ -36,3 +36,5 @@ CREATE TABLE `marxet_auction` (
   KEY `account_idx` (`seller_uid`),
   CONSTRAINT `account` FOREIGN KEY (`seller_uid`) REFERENCES `account` (`uid`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `vehicle` ADD `marxet_id` text DEFAULT NULL;

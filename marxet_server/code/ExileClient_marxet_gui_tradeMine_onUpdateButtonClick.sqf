@@ -3,12 +3,13 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
+ 
 private["_display"];
 disableSerialization;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
-if (ExileClientIsWaitingForServerTradeResponse) exitWith
+if (ExileClientIsWaitingForServerTradeResponse) exitWith 
 {
-	["WarningTitleAndText", ["Please Wait...", "Editing request in progress"]] call ExileClient_gui_toaster_addTemplateToast;
+	["WarningTitleAndText", ["Please Wait...", "Editing request in progress"]] call ExileClient_gui_toaster_addTemplateToast;	
 };
 if (MarXetTradingItem isEqualTo "" || MarXetRequestedItems isEqualTo []) exitWith {};
 ExileClientIsWaitingForServerTradeResponse = true;

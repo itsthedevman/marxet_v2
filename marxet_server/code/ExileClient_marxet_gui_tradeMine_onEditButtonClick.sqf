@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_display","_listbox","_entry","_requestedListbox","_picture","_classname","_quantity","_configFile","_index","_skinName","_title","_button"];
+ 
+private["_display", "_listbox", "_entry", "_requestedListbox", "_picture", "_classname", "_quantity", "_configFile", "_index", "_skinName", "_title", "_button"];
 disableSerialization;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
 _listbox = _display displayCtrl 22201;
@@ -18,19 +19,19 @@ MarXetTradingItem = (_entry select 3) select 4;
 	_picture = "";
 	_classname = _x select 0;
 	_quantity = _x select 1;
-	switch (_classname) do
+	switch (_classname) do 
 	{
 		case "ExileMoney":
 		{
 			_name = "Poptabs";
 			_picture = "\exile_assets\texture\ui\poptab_notification_ca.paa";
 		};
-		case "ExileScore":
+		case "ExileScore": 
 		{
 			_name = "Respect";
 			_picture = "\exile_assets\texture\ui\fail_ca.paa";
 		};
-		default
+		default 
 		{
 			_configFile = _classname call ExileClient_util_gear_getConfigNameByClassName;
 			_name = getText(configFile >> _configFile >> _classname >> "displayName");
@@ -41,10 +42,10 @@ MarXetTradingItem = (_entry select 3) select 4;
 	_requestedListbox lbSetTextRight [_index, format["x%1", _quantity]];
 	_requestedListbox lbSetPicture [_index, _picture];
 	_requestedListbox lbSetData [_index, _classname];
-	if (_classname isKindOf "AllVehicles") then
+	if (_classname isKindOf "AllVehicles") then 
 	{
 		_skinName = _classname call ExileClient_marxet_util_vehicle_getSkinName;
-		if !(_skinName isEqualTo "") then
+		if !(_skinName isEqualTo "") then 
 		{
 			_requestedListbox lbSetText [_index, format["%1 (%2)", _name, _skinName]];
 		};
@@ -61,16 +62,16 @@ _name = (_entry select 3) select 2;
 _classname = (_entry select 3) select 0;
 _title = _display displayCtrl 22155;
 _title ctrlSetStructuredText parseText format[
-	"<t align='center' size='1.2'>Editing Trade For<br/><t color='#3FD4FC'>%1</t>",
+	"<t align='center' size='1.2'>Editing Trade For<br/><t color='#3FD4FC'>%1</t>", 
 	_name
 ];
-if (_classname isKindOf "AllVehicles") then
+if (_classname isKindOf "AllVehicles") then 
 {
 	_skinName = _classname call ExileClient_marxet_util_vehicle_getSkinName;
-	if !(_skinName isEqualTo "") then
+	if !(_skinName isEqualTo "") then 
 	{
 		_title ctrlSetStructuredText parseText format[
-			"<t align='center' size='1.2'>Editing Trade For<br/><t color='#3FD4FC'>%1 (%2)</t>",
+			"<t align='center' size='1.2'>Editing Trade For<br/><t color='#3FD4FC'>%1 (%2)</t>", 
 			_name,
 			_skinName
 		];

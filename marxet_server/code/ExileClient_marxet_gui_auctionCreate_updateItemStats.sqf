@@ -3,13 +3,14 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_itemClassName","_dialog","_itemPicture","_i","_itemConfig","_picture","_promotedStats","_controlID"];
+ 
+private["_itemClassName", "_dialog", "_itemPicture", "_i", "_itemConfig", "_picture", "_promotedStats", "_controlID"];
 disableSerialization;
 _itemClassName = _this;
 _dialog = uiNameSpace getVariable ["RscMarXet", displayNull];
 _itemPicture = _dialog displayCtrl 22403;
 _itemPicture ctrlShow false;
-for "_i" from 22404 to 22431 do
+for "_i" from 22404 to 22431 do 
 {
 	(_dialog displayCtrl _i) ctrlShow false;
 };
@@ -18,13 +19,13 @@ if !(_itemClassName isEqualTo "") then
 	_itemConfig = _itemClassName call ExileClient_util_gear_getConfigNameByClassName;
 	_itemPicture ctrlShow true;
 	_picture = "";
-	switch (_itemClassName) do
+	switch (_itemClassName) do 
 	{
 		case "ExileScore":
 		{
 			_picture = "\exile_assets\texture\ui\fail_ca.paa";
 		};
-		default
+		default 
 		{
 			_picture = getText(configFile >> _itemConfig >> _itemClassName >> "picture")
 		};

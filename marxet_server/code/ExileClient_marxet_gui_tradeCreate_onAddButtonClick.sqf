@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_display","_fromListbox","_toListbox","_quantity","_classname","_picture","_configFile","_index","_skinName"];
+ 
+private["_display", "_fromListbox", "_toListbox", "_quantity", "_classname", "_picture", "_configFile", "_index", "_skinName"];
 disableSerialization;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
 _fromListbox = _display displayCtrl 22152;
@@ -15,19 +16,19 @@ _fromListbox lbDelete (lbCurSel _fromListbox);
 MarXetRequestedItems pushBack [_classname, parseNumber(_quantity)];
 _name = "";
 _picture = "";
-switch (_classname) do
+switch (_classname) do 
 {
 	case "ExileMoney":
 	{
 		_name = "Poptabs";
 		_picture = "\exile_assets\texture\ui\poptab_notification_ca.paa";
 	};
-	case "ExileScore":
+	case "ExileScore": 
 	{
 		_name = "Respect";
 		_picture = "\exile_assets\texture\ui\fail_ca.paa";
 	};
-	default
+	default 
 	{
 		_configFile = _classname call ExileClient_util_gear_getConfigNameByClassName;
 		_name = getText(configFile >> _configFile >> _classname >> "displayName");
@@ -38,10 +39,10 @@ _index = _toListbox lbAdd _name;
 _toListbox lbSetTextRight [_index, format["x%1", parseNumber(_quantity)]];
 _toListbox lbSetPicture [_index, _picture];
 _toListbox lbSetData [_index, _classname];
-if (_classname isKindOf "AllVehicles") then
+if (_classname isKindOf "AllVehicles") then 
 {
 	_skinName = _classname call ExileClient_marxet_util_vehicle_getSkinName;
-	if !(_skinName isEqualTo "") then
+	if !(_skinName isEqualTo "") then 
 	{
 		_toListbox lbSetText [_index, format["%1 (%2)", _name, _skinName]];
 	};

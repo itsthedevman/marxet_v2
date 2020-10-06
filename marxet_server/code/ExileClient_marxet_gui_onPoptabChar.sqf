@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_inputBox","_character","_display","_addButton","_ctrlText"];
+ 
+private["_inputBox", "_character", "_display", "_addButton", "_ctrlText"];
 disableSerialization;
 _inputBox = _this select 0;
 _character = _this select 1;
@@ -16,7 +17,7 @@ if (!(_character in [48,49,50,51,52,53,54,55,56,57])) then
 	_inputBox ctrlSetText _ctrlText;
 	_inputBox ctrlCommit 0;
 };
-try
+try 
 {
 	{
 		if !(_x in [48, 49, 50, 51, 52, 53, 54, 55, 56, 57]) then
@@ -27,7 +28,7 @@ try
 	forEach (toArray _ctrlText);
 	_addButton ctrlEnable true;
 }
-catch
+catch 
 {
 	_addButton ctrlEnable false;
 };

@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_endSeconds","_days","_hours","_minutes","_seconds","_text"];
+ 
+private["_endSeconds", "_days", "_hours", "_minutes", "_seconds", "_text"];
 _endSeconds = [] call ExileClient_marxet_util_time_sync;
 _days = floor(_endSeconds / 60 / 60 / 24);
 _hours = floor((_endSeconds / 60 / 60) % 24);

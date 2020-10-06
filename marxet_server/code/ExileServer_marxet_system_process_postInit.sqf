@@ -3,6 +3,7 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
+ 
 private["_entries"];
 "Starting initialization" call ExileServer_marxet_util_log;
 MarXetTrading = createSimpleObject ["Static", [-1000, -1000, 0]];

@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_overallDamage","_count","_hitpoints","_damages"];
+ 
+private["_overallDamage", "_count", "_hitpoints", "_damages"];
 _overallDamage = 0;
 _count = 0;
 _hitpoints = _this select 0;
@@ -15,7 +16,7 @@ _damages = _this select 2;
 		|| (_x find "hull") > -1
 		|| (_x find "body") > -1
 		|| (_x find "engine") > -1
-	) then
+	) then 
 	{
 		_overallDamage = _overallDamage + (_damages select _forEachIndex);
 		_count = _count + 1;

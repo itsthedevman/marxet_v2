@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_display","_inventory","_items","_temp","_direction","_sortingDropdown","_sortOption","_entry","_classname","_displayName","_picture","_configName","_config","_itemInformation","_category","_category1","_sortBy","_allowed","_effects","_effectNumbers"];
+ 
+private["_display", "_inventory", "_items", "_temp", "_direction", "_sortingDropdown", "_sortOption", "_entry", "_classname", "_displayName", "_picture", "_configName", "_config", "_itemInformation", "_category", "_category1", "_sortBy", "_allowed", "_effects", "_effectNumbers"];
 disableSerialization;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
 _inventory = allVariables MarXetTrading;
@@ -14,7 +15,7 @@ _sortingDropdown = _display displayCtrl 22100;
 _sortOption = _sortingDropdown lbValue (lbCurSel _sortingDropdown);
 {
 	_entry = MarXetTrading getVariable [_x, nil];
-	if !(isNil "_entry") then
+	if !(isNil "_entry") then 
 	{
 		_entry = +_entry;
 		_classname = ((_entry select 3) select 0);
@@ -27,12 +28,12 @@ _sortOption = _sortingDropdown lbValue (lbCurSel _sortingDropdown);
 				_displayName = format["%1 Poptabs", (_entry select 3) select 1 select 0];
 				_picture = "\exile_assets\texture\ui\poptab_notification_ca.paa";
 			};
-			case "ExileScore":
+			case "ExileScore": 
 			{
 				_displayName = format["%1 Respect", (_entry select 3) select 1 select 0];
 				_picture = "\exile_assets\texture\ui\fail_ca.paa";
 			};
-			default
+			default 
 			{
 				_configName = _classname call ExileClient_util_gear_getConfigNameByClassName;
 				_config = configFile >> _configName >> _classname;
@@ -48,9 +49,9 @@ _sortOption = _sortingDropdown lbValue (lbCurSel _sortingDropdown);
 		_category1 = _itemInformation select 1;
 		_sortBy = _displayName;
 		_allowed = false;
-		switch (_sortOption) do
+		switch (_sortOption) do 
 		{
-			default
+			default 
 			{
 				_allowed = true;
 			};
@@ -61,137 +62,137 @@ _sortOption = _sortingDropdown lbValue (lbCurSel _sortingDropdown);
 				_direction = (_sortOption isEqualTo 1);
 				_allowed = true;
 			};
-			case 3:
+			case 3: 
 			{
 				_allowed = (_configName isEqualTo "CfgWeapons" && {_category isEqualTo "Weapon"} && {_category1 in ["Rifle", "AssaultRifle"]});
 			};
-			case 4:
+			case 4: 
 			{
 				_allowed = (_configName isEqualTo "CfgWeapons" && {_category isEqualTo "Weapon"} && {_category1 isEqualTo "Handgun"});
 			};
-			case 5:
+			case 5: 
 			{
 				_allowed = (_configName isEqualTo "CfgWeapons" && {_category isEqualTo "Weapon"} && {_category1 isEqualTo "MachineGun"});
 			};
-			case 6:
+			case 6: 
 			{
 				_allowed = (_configName isEqualTo "CfgWeapons" && {_category isEqualTo "Weapon"} && {_category1 isEqualTo "SubmachineGun"});
 			};
-			case 7:
+			case 7: 
 			{
 				_allowed = (_configName isEqualTo "CfgWeapons" && {_category isEqualTo "Weapon"} && {_category1 isEqualTo "SniperRifle"});
 			};
-			case 8:
+			case 8: 
 			{
 				_allowed = (_configName isEqualTo "CfgWeapons" && {_category isEqualTo "Weapon"} && {_category1 in ["Cannon","BombLauncher","MissileLauncher","RocketLauncher","Mortar","Launcher","GrenadeLauncher"]});
 			};
-			case 9:
+			case 9: 
 			{
 				_allowed = (_configName isEqualTo "CfgWeapons" && {_category isEqualTo "Weapon"} && {!(_category1 in ["Rifle", "AssaultRifle", "Handgun", "MachineGun", "SubmachineGun", "SniperRifle", "Cannon","BombLauncher","MissileLauncher","RocketLauncher","Mortar","Launcher","GrenadeLauncher"])});
 			};
-			case 10:
+			case 10: 
 			{
 				_allowed = _configName isEqualTo "CfgMagazines" && {!(_category in ["Magazine", "Mine"])} || (_category isEqualTo "Magazine" && {(_classname find "Exile_Item") isEqualTo -1});
 			};
-			case 11:
+			case 11: 
 			{
 				_allowed = (_configName isEqualTo "CfgMagazines" && {_category isEqualTo "Magazine"} && {_category1 in ["Shell","SmokeShell","Grenade","Flare"]});
 			};
-			case 12:
+			case 12: 
 			{
 				_allowed = ((_configName isEqualTo "CfgMagazines" && {_category isEqualTo "Mine"}) || (_configName isEqualTo "CfgMagazines" && {_category isEqualTo "Magazine"} && {_category1 in ["Missile","Rocket"]}));
 			};
-			case 13:
+			case 13: 
 			{
-				if (isClass(_config >> "Interactions" >> "Consuming")) then
+				if (isClass(_config >> "Interactions" >> "Consuming")) then 
 				{
 					_effects = getArray(_config >> "Interactions" >> "Consuming" >> "effects");
-					if !(_effects isEqualTo []) then
+					if !(_effects isEqualTo []) then 
 					{
 						private _effectNumbers = [];
 						{
 							_effectNumbers pushBackUnique (_x select 0);
 						}
 						foreach _effects;
-						if (count(_effectNumbers arrayIntersect [2, 3]) > 0) then
+						if (count(_effectNumbers arrayIntersect [2, 3]) > 0) then 
 						{
 							_allowed = true;
 						};
 					};
 				};
 			};
-			case 14:
+			case 14: 
 			{
-				if (isClass(_config >> "Interactions" >> "Consuming")) then
+				if (isClass(_config >> "Interactions" >> "Consuming")) then 
 				{
 					_effects = getArray(_config >> "Interactions" >> "Consuming" >> "effects");
-					if !(_effects isEqualTo []) then
+					if !(_effects isEqualTo []) then 
 					{
 						private _effectNumbers = [];
 						{
 							_effectNumbers pushBackUnique (_x select 0);
 						}
 						foreach _effects;
-						if (count(_effectNumbers arrayIntersect [2, 3]) isEqualTo 0) then
+						if (count(_effectNumbers arrayIntersect [2, 3]) isEqualTo 0) then 
 						{
 							_allowed = true;
 						};
 					};
 				};
 			};
-			case 15:
+			case 15: 
 			{
 				_allowed = isClass(_config >> "Interactions" >> "Constructing");
 			};
-			case 16:
+			case 16: 
 			{
 				_allowed = (_configName isEqualTo "CfgMagazines" && {_category isEqualTo "Item"} && {!(_category1 in ["AccessoryMuzzle","AccessoryPointer","AccessorySights","AccessoryBipod"])});
 			};
-			case 17:
+			case 17: 
 			{
 				_allowed = (_configName isEqualTo "CfgMagazines" && {_category isEqualTo "Item"} && {_category1 in ["AccessoryMuzzle","AccessoryPointer","AccessorySights","AccessoryBipod"]});
 			};
-			case 18:
+			case 18: 
 			{
 				_allowed = (_configName isEqualTo "CfgWeapons" && {_category isEqualTo "Equipment"} && {_category1 in ["Uniform","Vest","Headgear"]});
 			};
-			case 19:
+			case 19: 
 			{
 				_allowed = (_configName isEqualTo "CfgMagazines" && {_category isEqualTo "Item"} && {(_classname find "Exile_Item") > -1}) || (isClass(_config >> "Interactions" >> "Consuming") && {getArray(_config >> "Interactions" >> "Consuming" >> "effects") isEqualTo []});
 			};
-			case 20:
+			case 20: 
 			{
 				_allowed = (_configName isEqualTo "CfgVehicles" && {(toLower(getText (_config >> "simulation")) in ["car","carx"])});
 			};
-			case 21:
+			case 21: 
 			{
 				_allowed = (_configName isEqualTo "CfgVehicles" && {(toLower(getText (_config >> "simulation")) in ["tank","tankx"])} && {getnumber (_config >> "maxspeed") > 0});
 			};
-			case 22:
+			case 22: 
 			{
 				_allowed = (_configName isEqualTo "CfgVehicles" && {toLower(getText (_config >> "simulation")) in ["helicopter","helicopterx","helicopterrtd"]});
 			};
-			case 23:
+			case 23: 
 			{
 				_allowed = (_configName isEqualTo "CfgVehicles" && {toLower(getText (_config >> "simulation")) in ["airplane","airplanex"]});
 			};
-			case 24:
+			case 24: 
 			{
 				_allowed = (_configName isEqualTo "CfgVehicles" && {toLower(getText (_config >> "simulation")) in ["ship","shipx","submarinex"]});
 			};
-			case 25:
+			case 25: 
 			{
 				_allowed = (_configName isEqualTo "CfgVehicles" && {!(toLower(getText (_config >> "simulation")) in ["car","carx","tank","tankx","helicopter","helicopterx","helicopterrtd","airplane","airplanex","ship","shipx","submarinex"])});
 			};
 		};
-		if (_allowed) then
+		if (_allowed) then 
 		{
 			_temp pushBack [_sortBy, _entry];
 		};
 	}
 	else
-	{
-		if (MarXetCurrentSelectedID isEqualTo _x) then
+	{	
+		if (MarXetCurrentSelectedID isEqualTo _x) then 
 		{
 			MarXetSelectedIndex = -1;
 			MarXetCurrentSelectedID = "";

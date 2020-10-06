@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_display","_playerPopTabs","_popTabsString","_respectString"];
+ 
+private["_display", "_playerPopTabs", "_popTabsString", "_respectString"];
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
 _playerPopTabs = player getVariable ["ExileMoney", 0];
 _popTabsString = _playerPopTabs call ExileClient_util_string_exponentToString;

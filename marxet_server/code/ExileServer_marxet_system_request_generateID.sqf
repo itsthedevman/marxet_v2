@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_numbers","_alpha","_listingID","_generatingListingID","_i"];
+ 
+private["_numbers", "_alpha", "_listingID", "_generatingListingID", "_i"];
 _numbers = "1234567890";
 _alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 _listingID = "";

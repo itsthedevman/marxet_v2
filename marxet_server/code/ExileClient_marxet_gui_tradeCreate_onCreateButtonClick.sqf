@@ -3,11 +3,12 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_display","_dropdown","_index","_containerType","_containerNetID"];
+ 
+private["_display", "_dropdown", "_index", "_containerType", "_containerNetID"];
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
-if (ExileClientIsWaitingForServerTradeResponse) exitWith
+if (ExileClientIsWaitingForServerTradeResponse) exitWith 
 {
-	["WarningTitleAndText", ["Please Wait...", "Request creation in progress"]] call ExileClient_gui_toaster_addTemplateToast;
+	["WarningTitleAndText", ["Please Wait...", "Request creation in progress"]] call ExileClient_gui_toaster_addTemplateToast;	
 };
 if (MarXetTradingItem isEqualTo [] || MarXetRequestedItems isEqualTo []) exitWith {};
 _dropdown = _display displayCtrl 22019;

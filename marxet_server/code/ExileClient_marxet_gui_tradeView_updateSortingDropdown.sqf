@@ -3,7 +3,8 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
-private["_display","_dropdown","_sortables","_index"];
+ 
+private["_display", "_dropdown", "_sortables", "_index"];
 disableSerialization;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
 _dropdown = _display displayCtrl 22100;
@@ -30,9 +31,9 @@ _sortables = [
 	["Clothing", 18],
 	["Misc", 19]
 ];
-if (getNumber(missionConfigFile >> "CfgMarXet" >> "Settings" >> "Vehicles" >> "allowVehiclesToBeListed") isEqualTo 1) then
+if (getNumber(missionConfigFile >> "CfgMarXet" >> "Settings" >> "Vehicles" >> "allowVehiclesToBeListed") isEqualTo 1) then 
 {
-	_sortables = _sortables + [
+	_sortables = _sortables + [	
 		["Vehicle (Car)", 20],
 		["Vehicle (Tank)", 21],
 		["Vehicle (Helicopter)", 22],

@@ -3,11 +3,12 @@
     Written by WolfkillArcadia
     CC BY-NC-SA 4.0
 */
+ 
 private["_display"];
 if !(MarXetUpdatePending) exitWith {};
 disableSerialization;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
-if (isNull _display) exitWith
+if (isNull _display) exitWith 
 {
 	[MarXetUpdateThread] call ExileClient_system_thread_removeTask;
 	MarXetUpdateThread = -1;
