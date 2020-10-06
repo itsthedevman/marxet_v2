@@ -9,4 +9,5 @@ private["_display"];
 disableSerialization;
 _display = uiNamespace getVariable ["RscMarXet", displayNull];
 MarXetTradingItem = [];
+MarXetEntryEndTime = -1;
 (_display displayCtrl 22441) ctrlEnable false;
