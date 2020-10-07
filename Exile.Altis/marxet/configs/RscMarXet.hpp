@@ -1934,7 +1934,7 @@ class RscMarXet
 					y = 23.5 * (0.04) + (0);
 					w = 13 * (0.025);
 					h = 1 * (0.04);
-					onButtonClick = "call ExileClient_marxet_gui_tradeMine_onDeleteButtonClick";
+					onButtonClick = "call ExileClient_marxet_gui_auctionMine_onDeleteButtonClick";
 					tooltip = "Removing a listing will refund the listed item/vehicle and you will be charged the removal fee above";
 				};
 			};
